@@ -12,17 +12,18 @@ interface IToDo {
  }
 
 
-
  export default function App (){
+
+
    //左の値を右でセットしている認識、右のオブジェクトの定義はどこ？
     const [value,setValue] = useState<string>("");
     const [toDoList, setToDos]=useState<IToDo[]>([]);
     const [error, showError]=useState<Boolean>(false);
 
     //終了したタスクを入力する
-    let item ={} 
+    //こいつがFinishedのページに飛んで表示される
+    let finishedTask:any[] = new Array(0) ; 
  
-
     const handleSubmit = (): void => {
         if(value.trim())
             setToDos([...toDoList,{ text: value, completed: false }]);
@@ -38,12 +39,13 @@ interface IToDo {
     };
 
 
-    const toggleComplete = (index: number): void => {
+    const toggleComplete = (toDo:IToDo,index: number): void => {
         const newToDoList = [...toDoList];
         newToDoList[index].completed = !newToDoList[index].completed
+        finishedTask.push(toDo)
         setToDos(newToDoList);
     };
-    const goToFinish = (item:any) => {NavigationService.navigate('Finished',item)}
+    const goToFinish = (finishedTask:any) => {NavigationService.navigate('Finished',finishedTask)}
 
 
     return(
@@ -78,7 +80,7 @@ interface IToDo {
                   </Text>
                   <Button
                       title={toDo.completed ? "Completed":"Complete"}
-                      onPress={() => toggleComplete(index)}
+                      onPress={() => toggleComplete(toDo,index)}
                   />
                   <Button
                       title="X"
