@@ -15,7 +15,7 @@ import NavigationService from './NavigationService'
     const [value,setValue] = useState<string>("");
     const [toDoList, setToDos]=useState<IToDo[]>([]);
     const [error, showError]=useState<Boolean>(false);
-    const [finishedTask, setFinishedTask]=useState<any[]>([]); 
+    const [finishedTask, setFinishedTask]=useState<string[]>([]); 
  
     const handleSubmit = (): void => {
         if(value.trim())
@@ -33,10 +33,9 @@ import NavigationService from './NavigationService'
 
 
     const toggleComplete = (toDo:IToDo,index: number): void => {
-        let toDoName = toDo.text
         const newToDoList = [...toDoList];
         newToDoList[index].completed = !newToDoList[index].completed;
-        setFinishedTask([ toDoName ]);
+        setFinishedTask([ ...finishedTask,toDo.text ]);
         console.log(finishedTask);
         setToDos(newToDoList);
     };
