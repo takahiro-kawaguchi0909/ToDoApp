@@ -8,7 +8,6 @@ interface IToDo {
 }
 
 export default function Home() {
-  //左の値を右でセットしている認識、右のオブジェクトの定義はどこ？
   const [value, setValue] = useState<string>("");
   const [toDoList, setToDos] = useState<IToDo[]>([]);
   const [error, showError] = useState<Boolean>(false);

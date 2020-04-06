@@ -11,12 +11,9 @@ import { createSwitchNavigator } from "react-navigation";
 import NavigationService from "./NavigationService";
 
 export default function Finished(props: any) {
-  const NameSort = () => {
-    finishedTask.sort();
-    NavigationService.navigate("FinishedSort", finishedTask);
-  };
-
   const finishedTask = props?.navigation?.state?.params;
+  const [sortedTask, setSortedTask] = useState<string[]>([]);
+
   var Views: any[] = [];
   for (let i = 0; i < finishedTask.length; i++) {
     Views.push(
@@ -26,16 +23,41 @@ export default function Finished(props: any) {
     );
   }
 
+  function prpsSort(props: any) {
+    const finishedTaskSort = finishedTask.sort();
+    setSortedTask(finishedTaskSort);
+    console.log(finishedTaskSort);
+    console.log(sortedTask);
+
+    var Views: any[] = [];
+
+    for (let i = 0; i < sortedTask.length; i++) {
+      Views.push(
+        <View>
+          <Text>{sortedTask[i]}</Text>
+        </View>
+      );
+
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>Finished Task</Text>
+          <View style={styles.listItem}>{Views}</View>
+        </View>
+      );
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Finished Task</Text>
       <View style={styles.inputWrapper}>
-        <Button title="Name Sort" onPress={NameSort} />
+        <Button title="Name Sort" onPress={prpsSort} />
       </View>
       <View style={styles.listItem}>{Views}</View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     padding: 35,
