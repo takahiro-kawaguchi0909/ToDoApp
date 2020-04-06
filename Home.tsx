@@ -70,6 +70,7 @@ export default function Home() {
             {toDo.text}
           </Text>
           <Button
+            disabled={toDo.completed}
             title={toDo.completed ? "Completed" : "Complete"}
             onPress={() => toggleComplete(toDo, index)}
           />
