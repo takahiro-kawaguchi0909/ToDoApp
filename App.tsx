@@ -1,5 +1,4 @@
 import Finished from "./Finished";
-import FinishedSort from "./FinishedSort";
 import Home from "./Home";
 import { createStackNavigator } from "react-navigation-stack";
 import NavigationService from "./NavigationService";
@@ -10,8 +9,7 @@ import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 const TopLevelNavigator = createStackNavigator(
   {
     Home: { screen: Home },
-    Finished: { screen: Finished },
-    FinishedSort: { screen: FinishedSort }
+    Finished: { screen: Finished }
   },
   {
     initialRouteName: "Home"
