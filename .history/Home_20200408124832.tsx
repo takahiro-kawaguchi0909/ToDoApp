@@ -61,9 +61,10 @@ export default function Home() {
           }}
           style={styles.inputBox}
         />
+      </View>
+      <View>
         <Button title="Add Task" onPress={handleSubmit} />
       </View>
-
       {error && (
         <Text style={styles.error}>Error: Input field is empty...</Text>
       )}

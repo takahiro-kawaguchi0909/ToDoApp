@@ -61,7 +61,7 @@ export default function Home() {
           }}
           style={styles.inputBox}
         />
-        <Button title="Add Task" onPress={handleSubmit} />
+                <Button title="Add Task" onPress={handleSubmit} />
       </View>
 
       {error && (

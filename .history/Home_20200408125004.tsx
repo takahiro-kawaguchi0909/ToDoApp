@@ -61,9 +61,11 @@ export default function Home() {
           }}
           style={styles.inputBox}
         />
-        <Button title="Add Task" onPress={handleSubmit} />
+        https://github.com/takahiro-kawaguchi0909/ToDoApp.git
       </View>
-
+      <View>
+x
+      </View>
       {error && (
         <Text style={styles.error}>Error: Input field is empty...</Text>
       )}

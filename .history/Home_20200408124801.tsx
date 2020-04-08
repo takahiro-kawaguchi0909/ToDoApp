@@ -48,6 +48,7 @@ export default function Home() {
     NavigationService.navigate("Finished", finishedTask);
   };
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
@@ -61,9 +62,17 @@ export default function Home() {
           }}
           style={styles.inputBox}
         />
+        <Button title="time limit" onPress={showDatePicker} />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="datetime"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+      </View>
+      <View>
         <Button title="Add Task" onPress={handleSubmit} />
       </View>
-
       {error && (
         <Text style={styles.error}>Error: Input field is empty...</Text>
       )}
