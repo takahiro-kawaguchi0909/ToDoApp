@@ -17,7 +17,7 @@ export default function Finished(props: any) {
   var Views: any[] = [];
   for (let i = 0; i < finishedTask.length; i++) {
     Views.push(
-      <View>
+      <View>  
         <Text>{finishedTask[i]}</Text>
       </View>
     );

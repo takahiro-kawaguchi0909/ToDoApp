@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { createStore, combineReducers } from "redux";
-import { useSelector, useDispatch } from "react-redux";
+import { createStore } from 'redux';
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import NavigationService from "./NavigationService";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -19,12 +18,38 @@ export default function Home() {
   const [finishedTask, setFinishedTask] = useState<string[]>([]);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  /*--------------------------------------------------------------------*/
+  // Action
+const myAction = { type: 'ACTION_INCREMENT'};
+
+// Reducer
+const myReducer = (currentState = 0, action) => {
+  switch(action.type) {
+    case 'ACTION_INCREMENT':
+      return currentState + 1;
+    default:
+      return currentState;
+  };
+};
+
+// storeにreducerを登録
+const store = Redux.createStore(myReducer);
+
+const render = () => ReactDOM.render(
+  <h1>{store.getState()}</h1>,
+  document.getElementById('root')
+);
+
+// storeが更新(dispatch実行時)されたら実行される
+store.subscribe(render);
+
+// クリック時にstateの更新を行う
+document.addEventListener('click', () => store.dispatch(myAction));
+  /*--------------------------------------------------------------------*/
+
   const handleSubmit = (): void => {
     if (value.trim())
-      setToDos([
-        ...toDoList,
-        { text: value, completed: false, limitTime: timeLimit },
-      ]);
+      setToDos([...toDoList, { text: value, completed: false ,limitTime: timeLimit}]);
     else showError(true);
     setValue("");
   };
@@ -56,9 +81,9 @@ export default function Home() {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
+  const handleConfirm = date => {
     console.warn("A date has been picked: ", date);
-    setTimeLimit(date);
+    setTimeLimit(date)
     hideDatePicker();
   };
 
@@ -69,7 +94,7 @@ export default function Home() {
         <TextInput
           placeholder="Enter your todo task..."
           value={value}
-          onChangeText={(e) => {
+          onChangeText={e => {
             setValue(e);
             showError(false);
           }}
@@ -85,7 +110,7 @@ export default function Home() {
       </View>
       <View>
         <Button title="Add Task" onPress={handleSubmit} />
-      </View>
+      </View> 
       {error && (
         <Text style={styles.error}>Error: Input field is empty...</Text>
       )}
@@ -93,45 +118,39 @@ export default function Home() {
       {toDoList.length === 0 && <Text>No to do task available</Text>}
       {toDoList.map((toDo: IToDo, index: number) => (
         <>
-          <View
-            style={styles.listItem}
-            key={`${index}_${toDo.text}_${toDo.limitTime.toString()}`}
+        <View style={styles.listItem} key={`${index}_${toDo.text}_${toDo.limitTime.toString()}`}>
+          <Text
+            style={[
+              styles.task,
+              { textDecorationLine: toDo.completed ? "line-through" : "none" }
+            ]}
           >
-            <Text
-              style={[
-                styles.task,
-                {
-                  textDecorationLine: toDo.completed ? "line-through" : "none",
-                },
-              ]}
-            >
-              {toDo.text}
-            </Text>
-            <Text
-              style={[
-                styles.task,
-                {
-                  textDecorationLine: toDo.completed ? "line-through" : "none",
-                },
-              ]}
-            >
-              {toDo.limitTime.toString()}
-            </Text>
-          </View>
+            {toDo.text}
+          </Text>
+          <Text
+            style={[
+              styles.task,
+              { textDecorationLine: toDo.completed ? "line-through" : "none" }
+            ]}
+          >
+            {toDo.limitTime.toString()}
+          </Text>
+        </View>
           <View>
-            <Button
-              disabled={toDo.completed}
-              title={toDo.completed ? "Completed" : "Complete"}
-              onPress={() => toggleComplete(toDo, index)}
-            />
-            <Button
-              title="X"
-              onPress={() => {
-                removeItem(index);
-              }}
-              color="crimson"
-            />
-          </View>
+          
+          <Button
+            disabled={toDo.completed}
+            title={toDo.completed ? "Completed" : "Complete"}
+            onPress={() => toggleComplete(toDo, index)}
+          />
+          <Button
+            title="X"
+            onPress={() => {
+              removeItem(index);
+            }}
+            color="crimson"
+          />
+        </View>
         </>
       ))}
       <View>
@@ -143,46 +162,46 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     padding: 35,
-    alignItems: "center",
+    alignItems: "center"
   },
   inputWrapper: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
+    marginBottom: 20
   },
   inputBox: {
     width: 200,
     borderColor: "purple",
     borderRadius: 8,
     borderWidth: 2,
-    paddingLeft: 8,
+    paddingLeft: 8
   },
   title: {
     fontSize: 40,
     marginBottom: 40,
     fontWeight: "bold",
-    textDecorationLine: "underline",
+    textDecorationLine: "underline"
   },
   subtitle: {
     fontSize: 20,
     marginBottom: 20,
-    color: "purple",
+    color: "purple"
   },
   listItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    marginBottom: 10,
+    marginBottom: 10
   },
   addButton: {
-    alignItems: "flex-end",
+    alignItems: "flex-end"
   },
   task: {
-    width: 200,
+    width: 200
   },
   error: {
-    color: "red",
-  },
+    color: "red"
+  }
 });

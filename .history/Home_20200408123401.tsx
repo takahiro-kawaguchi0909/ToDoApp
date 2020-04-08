@@ -19,6 +19,30 @@ export default function Home() {
   const [finishedTask, setFinishedTask] = useState<string[]>([]);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  /*--------------------------------------------------------------------*/
+  // Action
+   const setComment = (comment) => ({
+    type: "setComment",
+    comment,
+  });
+
+  // Reducer
+   const reducer = (state = { comment: null }, action) => {
+    switch (action.type) {
+      case "setComment": {
+        console.log(action);
+        return { ...state, comment: action.comment };
+      }
+      default: {
+        return state;
+      }
+    }
+  };
+
+  // Store
+   default createStore(combineReducers({ foo: reducer }));
+  /*--------------------------------------------------------------------*/
+
   const handleSubmit = (): void => {
     if (value.trim())
       setToDos([
